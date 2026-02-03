@@ -51,3 +51,6 @@ minio-data
 
 ### Hadoop ###
 hadoop
+
+### Sbt ###
+.metals/

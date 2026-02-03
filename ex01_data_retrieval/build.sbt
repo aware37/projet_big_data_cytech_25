@@ -14,4 +14,6 @@ libraryDependencies += "org.apache.spark" %% "spark-sql" % "3.5.5"
 // https://mvnrepository.com/artifact/org.apache.hadoop/hadoop-aws
 libraryDependencies += "org.apache.hadoop" % "hadoop-aws" % "3.3.4"
 libraryDependencies += "com.amazonaws" % "aws-java-sdk-bundle" % "1.12.262"
+libraryDependencies += "io.minio" % "minio" % "8.5.7"
+libraryDependencies += "com.lihaoyi" %% "requests" % "0.8.0"
 

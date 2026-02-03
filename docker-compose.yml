@@ -1,6 +1,6 @@
 services:
   spark-master:
-    build: ./docker
+    build: ./Docker
     container_name: spark-master
     environment:
       - SPARK_MODE=master
@@ -21,7 +21,7 @@ services:
       retries: 10
 
   spark-worker-1:
-    build: ./docker
+    build: ./Docker
     container_name: spark-worker-1
     depends_on:
       - spark-master
@@ -42,7 +42,7 @@ services:
       - spark-network
 
   spark-worker-2:
-    build: ./docker
+    build: ./Docker
     container_name: spark-worker-2
     depends_on:
       - spark-master
