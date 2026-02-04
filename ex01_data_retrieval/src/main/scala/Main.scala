@@ -10,7 +10,7 @@ object Main extends App {
     val endpoint = "http://localhost:9000"
     val accessKey = "minio"
     val secretKey = "minio123"
-    val bucketName = "nyc-raw"
+    val bucketName = "nyc-yellow-tripdata"
 
     val fileURL = "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2025-01.parquet"
     val localURL = "../data/raw/yellow_tripdata_2025-01.parquet"
