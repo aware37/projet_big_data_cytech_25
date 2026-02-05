@@ -45,6 +45,8 @@ build/
 
 ### Scala ###
 .bsp/
+.bloop/
+.metals/
 
 ### Minio ###
 minio-data
@@ -54,3 +56,11 @@ hadoop
 
 ### Sbt ###
 .metals/
+project/target/
+project/project/
+project/
+
+### Python ###
+.venv/
+__pycache__/
+*.pyc

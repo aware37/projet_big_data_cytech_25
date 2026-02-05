@@ -2,6 +2,10 @@ ThisBuild / version := "0.1.0-SNAPSHOT"
 
 ThisBuild / scalaVersion := "2.13.17"
 
+// Force le fork du process pour appliquer les options JVM
+ThisBuild / fork := true
+ThisBuild / javaOptions += "--add-exports=java.base/sun.nio.ch=ALL-UNNAMED"
+
 lazy val root = (project in file("."))
   .settings(
     name := "ex02_data_ingestion"
