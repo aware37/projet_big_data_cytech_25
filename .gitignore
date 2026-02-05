@@ -64,3 +64,8 @@ project/
 .venv/
 __pycache__/
 *.pyc
+
+### UV ###
+.venv/
+.python-version
+uv.lock

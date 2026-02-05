@@ -10,6 +10,46 @@ Pour l'instant voici les exercices finis :
 - Docker et Docker Compose installés
 - SBT installé
 - Python 3.8+
+- `uv` installé ([Installation](https://github.com/astral-sh/uv#installation))
+
+  Si `uv` n'est pas installé, installe-le avec :
+  ```sh
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+  ```
+
+---
+
+## 0. Initialiser l'environnement Python
+
+À la racine du projet, initialise `uv` :
+
+```sh
+uv init
+uv sync
+```
+
+Cela crée `.venv` et installe les dépendances définies dans `pyproject.toml`.
+
+### Ajouter des dépendances
+
+Ajouter de nouvelle dépendance Python dans `pyproject.toml` :
+
+```toml
+[project]
+dependencies = [
+    "streamlit",
+    "pandas",
+    "psycopg2-binary",
+    "matplotlib",
+    "nouvelle-dependance>=1.0.0",
+]
+```
+
+Puis synchronise :
+
+```sh
+uv sync
+```
 
 ---
 
@@ -141,24 +181,11 @@ Pour quitter `psql` :
 
 ## 6. Lancer le Dashboard Streamlit
 
-Crée un environnement Python virtuel (optionnel mais recommandé) :
-
-```sh
-python3 -m venv .venv
-source .venv/bin/activate
-```
-
-Installe les dépendances :
+Lance le dashboard depuis la racine du projet :
 
 ```sh
 cd ex04_dashboard
-pip install -r requirement.txt
-```
-
-Lance le dashboard :
-
-```sh
-streamlit run app.py
+uv run streamlit run app.py
 ```
 
 Le dashboard s'ouvre automatiquement sur [http://localhost:8501](http://localhost:8501) 🎉
@@ -168,6 +195,10 @@ Le dashboard s'ouvre automatiquement sur [http://localhost:8501](http://localhos
 **Résumé des commandes principales** :
 
 ```sh
+# 0. Initialiser l'environnement Python (une seule fois)
+uv init
+uv sync
+
 # 1. Lancer l'infrastructure
 sudo docker-compose up -d
 
@@ -192,11 +223,8 @@ sudo docker exec -it postgres psql -U postgres -d bigdata_db
 # (puis requêtes SQL ci-dessus)
 
 # 7. Lancer le dashboard
-python3 -m venv .venv
-source .venv/bin/activate
 cd ex04_dashboard
-pip install -r requirement.txt
-streamlit run app.py
+uv run streamlit run app.py
 ```
 
 ---
