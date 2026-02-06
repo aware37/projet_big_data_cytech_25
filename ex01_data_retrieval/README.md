@@ -44,13 +44,13 @@ Le programme demande interactivement les dates de début et fin.
 ### Avec arguments (non-interactif)
 
 ```sh
-sbt "run --start 2022-01 --end 2022-12"
+sbt "run --start 2024-01 --end 2024-12"
 ```
 
 ### Avec variables d'environnement
 
 ```sh
-START_DATE=2022-01 END_DATE=2022-12 sbt run
+START_DATE=2024-01 END_DATE=2022-14 sbt run
 ```
 
 ## Vérification

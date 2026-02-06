@@ -9,8 +9,8 @@
 | Métrique           | Valeur                        |
 |--------------------|-------------------------------|
 | Modèle             | HistGradientBoostingRegressor |
-| RMSE               | **13.56**                     |
-| Lignes entraînées  | **36 817 088** (12 mois 2022) |
+| RMSE               | **3.44**                     |
+| Lignes entraînées  | **35 632 437** (12 mois 2024) |
 | Features           | 10                            |
 
 ## Stack technique
@@ -77,18 +77,18 @@ Depuis la **racine du projet** :
 # Entraîner sur toutes les données nettoyées de 2022
 PYTHONPATH=ex05_ml_prediction_service/src uv run python \
   ex05_ml_prediction_service/scripts/train.py \
-  --input s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-01/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-02/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-03/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-04/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-05/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-06/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-07/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-08/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-09/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-10/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-11/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-12/
+  --input s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-01/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-02/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-03/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-04/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-05/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-06/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-07/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-08/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-09/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-10/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-11/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-12/
 ```
 
 ### Entraîner sur un échantillon (plus rapide)
@@ -96,7 +96,7 @@ PYTHONPATH=ex05_ml_prediction_service/src uv run python \
 ```sh
 PYTHONPATH=ex05_ml_prediction_service/src uv run python \
   ex05_ml_prediction_service/scripts/train.py \
-  --input s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-01/ \
+  --input s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-01/ \
   --max-rows 3000000
 ```
 
@@ -110,9 +110,9 @@ PYTHONPATH=ex05_ml_prediction_service/src uv run python \
 ```sh
 PYTHONPATH=ex05_ml_prediction_service/src uv run python \
   ex05_ml_prediction_service/scripts/predict.py \
-  --input s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-12/ \
+  --input s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-12/ \
   --output ex05_ml_prediction_service/artifacts/predictions.csv \
-  --max-rows 100000
+  --max-rows 1000000
 ```
 
 ### Résultat
@@ -152,13 +152,3 @@ dump(model) + json(metrics)
 | `MINIO_ENDPOINT`   | `http://localhost:9000` |
 | `MINIO_ACCESS_KEY` | `minio`                 |
 | `MINIO_SECRET_KEY` | `minio123`              |
-
-## Problèmes courants
-
-### `ModuleNotFoundError: taxi_ml`
-
-Ajouter `PYTHONPATH=ex05_ml_prediction_service/src` avant la commande.
-
-### Erreur MinIO / S3
-
-Vérifier que le conteneur MinIO est lancé (`sudo docker-compose up -d minio`) et que les credentials sont corrects.

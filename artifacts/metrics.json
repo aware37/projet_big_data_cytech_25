@@ -1,6 +1,6 @@
 {
-  "rmse": 13.56257679770057,
-  "n_rows": 36817088,
+  "rmse": 3.4420663195237076,
+  "n_rows": 35579916,
   "features": [
     "passenger_count",
     "trip_distance",

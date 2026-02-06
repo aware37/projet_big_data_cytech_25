@@ -3,7 +3,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 from db import read_sql
 
-# ─────────────────────────── Configuration ───────────────────────────
+# Configuration
 st.set_page_config(
     page_title="NYC Yellow Taxi — Dashboard",
     page_icon="🚕",
@@ -64,7 +64,7 @@ month_filter = "to_char(tpep_pickup_datetime, 'YYYY-MM') IN %(months)s"
 params = {"months": month_list}
 
 st.sidebar.markdown("---")
-st.sidebar.caption(f"📊 {len(selected_months)} mois sélectionné(s)")
+st.sidebar.caption(f"{len(selected_months)} mois sélectionné(s)")
 
 #  1. KPI principaux
 
@@ -83,21 +83,19 @@ kpi = read_sql(f"""
 
 k = kpi.iloc[0]
 c1, c2, c3, c4, c5 = st.columns(5)
-c1.metric("🚖 Courses", f"{int(k['nb_trips']):,}".replace(",", " "))
-c2.metric("💰 CA Total", f"${float(k['sum_total'] or 0):,.0f}".replace(",", " "))
-c3.metric("🧾 Panier Moyen", f"${float(k['avg_total'] or 0):.2f}")
-c4.metric("📏 Distance Moy.", f"{float(k['avg_distance'] or 0):.2f} mi")
-c5.metric("💵 Tip Moyen", f"${float(k['avg_tip'] or 0):.2f}")
+c1.metric("Courses", f"{int(k['nb_trips']):,}".replace(",", " "))
+c2.metric("CA Total", f"${float(k['sum_total'] or 0):,.0f}".replace(",", " "))
+c3.metric("Panier Moyen", f"${float(k['avg_total'] or 0):.2f}")
+c4.metric("Distance Moy.", f"{float(k['avg_distance'] or 0):.2f} mi")
+c5.metric("Tip Moyen", f"${float(k['avg_tip'] or 0):.2f}")
 
 st.markdown("---")
 
-# ═══════════════════════════════════════════════════════════════════
-#  2) LIGNE 1 : CA par jour + Distribution horaire
-# ═══════════════════════════════════════════════════════════════════
+# 2. LIGNE 1 : CA par jour + Distribution horaire
 col_left, col_right = st.columns([3, 2])
 
 with col_left:
-    st.subheader("📈 Chiffre d'affaires par jour")
+    st.subheader("Chiffre d'affaires par jour")
     daily = read_sql(f"""
         SELECT
             date(tpep_pickup_datetime) AS day,
@@ -127,7 +125,7 @@ with col_left:
     st.plotly_chart(fig, use_container_width=True)
 
 with col_right:
-    st.subheader("🕐 Distribution horaire des courses")
+    st.subheader("Distribution horaire des courses")
     hourly = read_sql(f"""
         SELECT
             EXTRACT(HOUR FROM tpep_pickup_datetime)::int AS hour,
@@ -156,7 +154,7 @@ with col_right:
 col_left, col_right = st.columns([3, 2])
 
 with col_left:
-    st.subheader("📍 Top 10 zones de pickup")
+    st.subheader("Top 10 zones de pickup")
     top_pu = read_sql(f"""
         SELECT
             l.zone      AS pickup_zone,
@@ -188,7 +186,7 @@ with col_left:
     st.plotly_chart(fig, use_container_width=True)
 
 with col_right:
-    st.subheader("💳 Répartition des paiements")
+    st.subheader("Répartition des paiements")
     pay = read_sql(f"""
         SELECT
             p.payment_name AS payment,
@@ -223,7 +221,7 @@ with col_right:
 col_left, col_right = st.columns(2)
 
 with col_left:
-    st.subheader("🏢 CA & Courses par Vendor")
+    st.subheader("CA & Courses par Vendor")
     vendor = read_sql(f"""
         SELECT
             COALESCE(v.vendor_name, 'Unknown') AS vendor,
@@ -264,7 +262,7 @@ with col_left:
     st.plotly_chart(fig, use_container_width=True)
 
 with col_right:
-    st.subheader("📊 Tarif moyen par tranche de distance")
+    st.subheader("Tarif moyen par tranche de distance")
     dist_fare = read_sql(f"""
         SELECT
             CASE
@@ -316,7 +314,7 @@ with col_right:
 col_left, col_right = st.columns([3, 2])
 
 with col_left:
-    st.subheader("🔥 Heatmap des courses (jour de la semaine × heure)")
+    st.subheader("Heatmap des courses (jour de la semaine × heure)")
     heatmap = read_sql(f"""
         SELECT
             EXTRACT(DOW FROM tpep_pickup_datetime)::int  AS dow,
@@ -348,7 +346,7 @@ with col_left:
     st.plotly_chart(fig, use_container_width=True)
 
 with col_right:
-    st.subheader("🏁 Top 10 zones de dropoff")
+    st.subheader("Top 10 zones de dropoff")
     top_do = read_sql(f"""
         SELECT
             l.zone    AS dropoff_zone,
@@ -380,7 +378,7 @@ with col_right:
 
 #  6. Ligne 5 : Comparaison mensuelle
 if len(selected_months) > 1:
-    st.subheader("📅 Comparaison mensuelle")
+    st.subheader("Comparaison mensuelle")
     monthly = read_sql(f"""
         SELECT
             to_char(tpep_pickup_datetime, 'YYYY-MM') AS month,
@@ -429,7 +427,7 @@ if len(selected_months) > 1:
 
 
 #  7. Table échantillon
-with st.expander("🔎 Voir un échantillon de trajets (50 lignes)"):
+with st.expander("Voir un échantillon de trajets (50 lignes)"):
     sample = read_sql(f"""
         SELECT
             f.trip_id,

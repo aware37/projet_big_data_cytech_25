@@ -11,7 +11,7 @@ Projet Big Data CY Tech 2025 — Pipeline complet d'ingestion, analyse et prédi
 | [ex03](ex03_sql_table_creation/) | Création du schéma en étoile (SQL) | ✅ |
 | [ex04](ex04_dashboard/) | Dashboard analytique (Streamlit + Plotly) | ✅ |
 | [ex05](ex05_ml_prediction_service/) | Prédiction ML du montant (scikit-learn) | ✅ |
-| [ex06](ex06_airflow/) | Orchestration Airflow | ⬜ |
+| [ex06](ex06_airflow/) | Orchestration Airflow | ❌ |
 
 ## Architecture
 
@@ -63,7 +63,7 @@ Services démarrés :
 
 ```sh
 cd ex01_data_retrieval
-sbt "run --start 2022-01 --end 2022-12"
+sbt "run --start 2024-01 --end 2024-12"
 cd ..
 ```
 
@@ -87,7 +87,7 @@ SELECT COUNT(*) FROM dim_rate_code;     -- 7
 
 ```sh
 cd ex02_data_ingestion
-sbt "run --start 2022-01 --end 2022-12"
+sbt "run --start 2024-01 --end 2024-12"
 cd ..
 ```
 
@@ -107,18 +107,18 @@ uv run streamlit run app.py
 ```sh
 PYTHONPATH=ex05_ml_prediction_service/src uv run python \
   ex05_ml_prediction_service/scripts/train.py \
-  --input s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-01/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-02/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-03/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-04/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-05/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-06/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-07/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-08/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-09/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-10/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-11/ \
-         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-12/
+  --input s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-01/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-02/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-03/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-04/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-05/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-06/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-07/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-08/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-09/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-10/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-11/ \
+         s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-12/
 ```
 
 ### 8. Prédictions ML (ex05)
@@ -126,9 +126,9 @@ PYTHONPATH=ex05_ml_prediction_service/src uv run python \
 ```sh
 PYTHONPATH=ex05_ml_prediction_service/src uv run python \
   ex05_ml_prediction_service/scripts/predict.py \
-  --input s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2022-12/ \
+  --input s3://nyc-yellow-tripdata/cleaned/yellow_tripdata_2024-12/ \
   --output ex05_ml_prediction_service/artifacts/predictions.csv \
-  --max-rows 100000
+  --max-rows 1000000
 ```
 
 ---
@@ -143,10 +143,10 @@ uv sync
 sudo docker-compose up -d
 
 # 2. Téléchargement des données
-cd ex01_data_retrieval && sbt "run --start 2022-01 --end 2022-12" && cd ..
+cd ex01_data_retrieval && sbt "run --start 2024-01 --end 2024-12" && cd ..
 
 # 3. Ingestion Spark
-cd ex02_data_ingestion && sbt "run --start 2022-01 --end 2022-12" && cd ..
+cd ex02_data_ingestion && sbt "run --start 2024-01 --end 2024-12" && cd ..
 
 # 4. Dashboard
 cd ex04_dashboard && uv run streamlit run app.py

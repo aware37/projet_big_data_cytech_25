@@ -1,3 +1,10 @@
+"""Model building and evaluation utilities.
+
+Provides a scikit-learn pipeline using
+:class:`~sklearn.ensemble.HistGradientBoostingRegressor`
+with ordinal-encoded categorical features.
+"""
+
 import numpy as np
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
@@ -8,11 +15,24 @@ from sklearn.ensemble import HistGradientBoostingRegressor
 
 
 def build_model(categorical_cols, numeric_cols) -> Pipeline:
-    """Build a sklearn pipeline model.
+    """Build a scikit-learn regression pipeline.
 
-    Uses OrdinalEncoder + HistGradientBoosting's native categorical
-    support instead of OneHotEncoder, which is far more efficient
-    when categories have high cardinality (e.g. 265 location IDs).
+    Uses ``OrdinalEncoder`` for categorical features and
+    ``HistGradientBoostingRegressor`` as the estimator, which
+    handles high-cardinality categories (e.g. 265 location IDs)
+    efficiently.
+
+    Parameters
+    ----------
+    categorical_cols : list of str
+        Column names to treat as categorical.
+    numeric_cols : list of str
+        Column names to treat as numeric.
+
+    Returns
+    -------
+    sklearn.pipeline.Pipeline
+        Fitted-ready pipeline with preprocessing and model.
     """
     numeric_pipe = Pipeline(
         steps=[
@@ -23,8 +43,10 @@ def build_model(categorical_cols, numeric_cols) -> Pipeline:
     categorical_pipe = Pipeline(
         steps=[
             ("imputer", SimpleImputer(strategy="most_frequent")),
-            ("ordinal", OrdinalEncoder(handle_unknown="use_encoded_value",
-                                       unknown_value=-1)),
+            ("ordinal", OrdinalEncoder(
+                handle_unknown="use_encoded_value",
+                unknown_value=-1,
+            )),
         ]
     )
 
@@ -35,8 +57,6 @@ def build_model(categorical_cols, numeric_cols) -> Pipeline:
         ],
     )
 
-    # OrdinalEncoder handles high-cardinality categories (>255),
-    # so we let HGBR treat them as ordinal-encoded numeric features.
     reg = HistGradientBoostingRegressor(
         max_depth=8,
         learning_rate=0.05,
@@ -48,5 +68,18 @@ def build_model(categorical_cols, numeric_cols) -> Pipeline:
 
 
 def rmse(y_true, y_pred) -> float:
-    """Compute RMSE."""
+    """Compute Root Mean Squared Error.
+
+    Parameters
+    ----------
+    y_true : array-like
+        Ground truth target values.
+    y_pred : array-like
+        Predicted target values.
+
+    Returns
+    -------
+    float
+        RMSE value.
+    """
     return float(np.sqrt(mean_squared_error(y_true, y_pred)))

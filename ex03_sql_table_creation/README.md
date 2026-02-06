@@ -14,10 +14,10 @@ Mettre en place un **schéma en étoile** (star schema) dans PostgreSQL pour sto
                     │ vendor_name  │
                     └──────┬───────┘
                            │
-┌────────────────┐   ┌─────┴──────────────────────┐   ┌──────────────────┐
+┌────────────────┐   ┌─────┴───────────────────────┐   ┌──────────────────┐
 │  dim_location  │   │        fact_trips           │   │ dim_payment_type │
 │────────────────│   │─────────────────────────────│   │──────────────────│
-│ location_id PK │◄──│ trip_id PK (SERIAL)         │──►│ payment_type_id  │
+│ location_id PK │◄──│ trip_id PK (SERIAL)         │──►│ payment_type_id  PK│
 │ borough        │   │ vendor_id FK                │   │ payment_name     │
 │ zone           │   │ rate_code_id FK             │   └──────────────────┘
 │ service_zone   │   │ payment_type_id FK          │
@@ -26,10 +26,10 @@ Mettre en place un **schéma en étoile** (star schema) dans PostgreSQL pour sto
                      │ tpep_pickup_datetime        │   │──────────────────│
                      │ tpep_dropoff_datetime       │   │ rate_code_id PK  │
                      │ passenger_count             │   │ rate_description │
-                     │ trip_distance DECIMAL(10,2)  │   └──────────────────┘
-                     │ fare_amount DECIMAL(10,2)    │
-                     │ tip_amount DECIMAL(10,2)     │
-                     │ total_amount DECIMAL(10,2)   │
+                     │ trip_distance DECIMAL(10,2) │   └──────────────────┘
+                     │ fare_amount DECIMAL(10,2)   │
+                     │ tip_amount DECIMAL(10,2)    │
+                     │ total_amount DECIMAL(10,2)  │
                      │ ...                         │
                      └─────────────────────────────┘
 ```

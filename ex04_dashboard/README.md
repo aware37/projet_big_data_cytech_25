@@ -69,7 +69,7 @@ La connexion PostgreSQL est gérée dans `db.py` via variables d'environnement :
 
 ```
 ex04_dashboard/
-├── app.py      → application Streamlit (466 lignes, 11 sections)
-├── db.py       → connexion PostgreSQL + helper read_sql()
+├── app.py      → application Streamlit
+├── db.py       → connexion PostgreSQL
 └── README.md
 ```
